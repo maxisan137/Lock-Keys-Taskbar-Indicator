@@ -8,8 +8,8 @@ This is a simple Windows widget that shows the status of Caps Lock, Num Lock and
 
 To install:
 
- - Download the latest release
- - Unzip the archive into any folder
+ - Download the latest release [here](https://github.com/maxisan137/Lock-Keys-Taskbar-Indicator/releases)
+ - Unzip the archive contents in your preferred location
  - Start the **LockKeysTaskBarIndicator.exe** executable
 
 The app is now running and the icons should appear in your taskbar. Additionally, you may want to set up the icons to not be hidden in the taskbar tray. To do this, right click on your taskbar -> *Taskbar settings* -> *Select which icons appear on the taskbar* and enable any one of the **LockKeysTaskBarIndicator** icons.
