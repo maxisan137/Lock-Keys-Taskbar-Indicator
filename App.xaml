@@ -1,4 +1,4 @@
-﻿<Application x:Class="Lock_Keys_Taskbar_Indicator.App"
+﻿<Application x:Class="Maxisan.LockKeysTaskbarIndicator.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Application.Resources>

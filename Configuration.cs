@@ -1,4 +1,4 @@
-﻿namespace Lock_Keys_Taskbar_Indicator
+﻿namespace Maxisan.LockKeysTaskbarIndicator
 {
     internal struct Configuration
     {

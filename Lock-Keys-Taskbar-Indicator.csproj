@@ -5,7 +5,7 @@
     <TargetFramework>net7.0-windows</TargetFramework>
     <PublishSingleFile>true</PublishSingleFile>
     <AssemblyName>LockKeysTaskBarIndicator</AssemblyName>
-    <RootNamespace>Lock_Keys_Taskbar_Indicator</RootNamespace>
+    <RootNamespace>Maxisan.LockKeysTaskbarIndicator</RootNamespace>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>

@@ -1,13 +1,12 @@
 ﻿using System;
 using System.IO;
-using System.Reflection;
 using System.Text.Json;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
 using Forms = System.Windows.Forms;
 
-namespace Lock_Keys_Taskbar_Indicator
+namespace Maxisan.LockKeysTaskbarIndicator
 {
     public partial class App : Application
     {
