@@ -10,13 +10,6 @@
         private const string DEFAULT_ICON_PATH_SCROLL_ON = "icons/scrolllock_on.ico";
         private const string DEFAULT_ICON_PATH_SCROLL_OFF = "icons/scrolllock_off.ico";
 
-        public struct StatusIconConfig
-        {
-            public string IconPathOn {  get; set; }
-            public string IconPathOff { get; set; }
-            public bool ShowIcon { get; set; }
-        }
-
         public StatusIconConfig CapsStatusIcon { get; set; }
         public StatusIconConfig NumStatusIcon { get; set; }
         public StatusIconConfig ScrollStatusIcon { get; set; }

@@ -29,7 +29,7 @@ namespace Maxisan.LockKeysTaskbarIndicator
 
         private static readonly List<StatusIcon> statusIcons = new();
 
-        public StatusIcon(string name, Configuration.StatusIconConfig config, LockCheck lockCheckMethod, App parent)
+        public StatusIcon(string name, StatusIconConfig config, LockCheck lockCheckMethod, App parent)
         {
             this.name = name;
             iconPathOn = config.IconPathOn;
@@ -86,9 +86,9 @@ namespace Maxisan.LockKeysTaskbarIndicator
         }
 
         // Returns configuration of the status icon
-        public Configuration.StatusIconConfig GetConfiguration()
+        public StatusIconConfig GetConfiguration()
         {
-            return new Configuration.StatusIconConfig()
+            return new StatusIconConfig()
             {
                 IconPathOn = iconPathOn,
                 IconPathOff = iconPathOff,
