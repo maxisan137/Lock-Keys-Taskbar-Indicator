@@ -50,7 +50,7 @@ public partial class App : Application
         //}
 
         // Get configuration
-        TrayConfig config = ConfigHandler.GetConfig();
+        AppConfig config = ConfigHandler.GetConfig();
 
         // Create icon tray
         _iconTray = new(config, this);

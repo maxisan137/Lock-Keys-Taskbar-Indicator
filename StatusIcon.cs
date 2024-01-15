@@ -8,13 +8,7 @@ internal class StatusIcon
 {
     private readonly string _name;
     
-    /// <summary>
-    /// Icon configuration reference
-    /// </summary>
     private readonly StatusIconConfig _config;
-
-    private readonly System.Drawing.Icon _iconOn;
-    private readonly System.Drawing.Icon _iconOff;
 
     private readonly Forms.NotifyIcon notifyIcon;
 
@@ -22,6 +16,9 @@ internal class StatusIcon
     /// Method used to check the key lock status
     /// </summary>
     private readonly Func<bool> _lockCheck;
+
+    private System.Drawing.Icon _iconOn;
+    private System.Drawing.Icon _iconOff;
 
     /// <summary>
     /// Status of requried icon visibility.
@@ -35,8 +32,10 @@ internal class StatusIcon
 
         _config = config;
 
-        _iconOn = new(_config.IconPathOn);
-        _iconOff = new(_config.IconPathOff);
+        Theme theme = ThemeHandler.DEFAULT_THEME;
+        _iconOn = new(theme == Theme.Dark ? _config.IconPathOn.IconPathDarkMode : _config.IconPathOn.IconPathLightMode);
+        _iconOff = new(theme == Theme.Dark ? _config.IconPathOff.IconPathDarkMode : _config.IconPathOff.IconPathLightMode);
+
         _show = _config.ShowIcon;
 
         _lockCheck = lockCheckMethod;
@@ -156,6 +155,16 @@ internal class StatusIcon
     public void CheckLockStatus()
     {
         notifyIcon.Icon = _lockCheck() ? _iconOn : _iconOff;
+    }
+
+    /// <summary>
+    /// Update the theme of the icon
+    /// </summary>
+    /// <param name="theme">Theme to be used</param>
+    public void UpdateTheme(Theme theme)
+    {
+        _iconOn = new(theme == Theme.Dark ? _config.IconPathOn.IconPathDarkMode : _config.IconPathOn.IconPathLightMode);
+        _iconOff = new(theme == Theme.Dark ? _config.IconPathOff.IconPathDarkMode : _config.IconPathOff.IconPathLightMode);
     }
 
     /// <summary>

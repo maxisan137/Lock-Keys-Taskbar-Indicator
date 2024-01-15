@@ -2,7 +2,7 @@
 
 internal class StatusIconConfig
 {
-    public string IconPathOn { get; set; } = "";
-    public string IconPathOff { get; set; } = "";
+    public IconPath IconPathOn { get; set; }
+    public IconPath IconPathOff { get; set; }
     public bool ShowIcon { get; set; }
 }

@@ -10,7 +10,7 @@
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <StartupObject>Maxisan.LockKeysTaskbarIndicator.App</StartupObject>
-    <ApplicationIcon>icons\capslock_on.ico</ApplicationIcon>
+    <ApplicationIcon>icons\app_icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -34,27 +34,67 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="icons\capslock_on.ico" />
+    <Content Include="icons\app_icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <None Update="icons\capslock_off.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="icons\capslock_off_black.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="icons\capslock_off_white.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="icons\capslock_on.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="icons\capslock_on_black.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="icons\capslock_on_white.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="icons\numlock_off.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="icons\numlock_off_black.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="icons\numlock_off_white.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="icons\numlock_on.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="icons\numlock_on_black.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="icons\numlock_on_white.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="icons\scrolllock_off.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="icons\scrolllock_off_black.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="icons\scrolllock_off_white.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="icons\scrolllock_on.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="icons\scrolllock_on_black.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="icons\scrolllock_on_white.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
