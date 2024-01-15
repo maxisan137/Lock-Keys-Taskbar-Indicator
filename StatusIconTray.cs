@@ -12,9 +12,8 @@ internal class StatusIconTray
     private const string MENU_TEXT_EXIT = "Exit";
 
     private readonly App _parent;
+    private readonly TrayConfig _config;
     private readonly List<StatusIcon> _icons = new();
-
-    private TrayConfig _config;
     
     public StatusIconTray(TrayConfig config, App parent)
     {
@@ -22,6 +21,10 @@ internal class StatusIconTray
         _parent = parent;
     }
 
+    /// <summary>
+    /// Add a tray icon
+    /// </summary>
+    /// <param name="icon">StatusIcon to be added to the tray</param>
     public void AddIcon(StatusIcon icon)
     {
         // Clear all icon's context menu
@@ -43,12 +46,11 @@ internal class StatusIconTray
                     MenuItemText(statusIconJ),
                     (sender, e) =>
                     {
-                        //statusIconJ.SwitchVisibility();
-                        SwitchIconVisibility(statusIconJ);
+                        statusIconJ.SwitchVisibilityStatus();
+                        ReloadIcons();
 
-                        //_parent.WriteConfig();
                         statusIconJ.UpdateConfiguration();
-                        new ConfigHandler().SaveConfig(_config);
+                        ConfigHandler.SaveConfig(_config);
                     }
                     );
             }
@@ -64,10 +66,7 @@ internal class StatusIconTray
         }
 
         // Visualize the icon
-        if (icon.IsShown())
-        {
-            icon.SetIconVisibility( true );
-        }
+        icon.ResetVisibility();
 
         // Makes sure to disable Hide option in case there is only one icon showed
         UpdateMenuItems();
@@ -95,26 +94,25 @@ internal class StatusIconTray
         }
     }
 
-    public void SwitchIconVisibility(StatusIcon icon)
-    {
-        icon.SwitchVisibilityStatus();
-        ReloadIcons();
-    }
-
-    public void ReloadIcons()
+    /// <summary>
+    /// Reloads all icons based on their visibility setting
+    /// </summary>
+    private void ReloadIcons()
     {
         foreach (StatusIcon icon in _icons)
         {
-            icon.SetIconVisibility(false);
+            icon.SwitchOffVisibility();
         }
         foreach (StatusIcon icon in _icons)
         {
-            icon.SetIconVisibility(icon.IsShown());
+            icon.ResetVisibility();
         }
         UpdateMenuItems();
     }
 
-    // Update the text of menu items based on whether or not the respective icons are showing
+    /// <summary>
+    /// Update all icons menu items texts to reflect which icon's visibility is on or off
+    /// </summary>
     private void UpdateMenuItems()
     {
         // Check if there is only one icon visible, in which case disable ability to hide it
@@ -151,8 +149,12 @@ internal class StatusIconTray
         }
     }
 
-    // Returns the text of menu item related to this status icon in particular
-    private string MenuItemText(StatusIcon statusIcon)
+    /// <summary>
+    /// Returns the text of menu item related to this status icon in particular
+    /// </summary>
+    /// <param name="statusIcon">Status icon</param>
+    /// <returns>Menu text related to that icon</returns>
+    private static string MenuItemText(StatusIcon statusIcon)
     {
         return (statusIcon.IsShown() ? MENU_TEXT_HIDE : MENU_TEXT_SHOW) + MENU_TEXT_SPACE + statusIcon.GetName() + MENU_TEXT_SPACE + MENU_TEXT_STATUS;
     }

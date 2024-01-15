@@ -7,7 +7,10 @@ namespace Maxisan.LockKeysTaskbarIndicator;
 internal class StatusIcon
 {
     private readonly string _name;
-
+    
+    /// <summary>
+    /// Icon configuration reference
+    /// </summary>
     private readonly StatusIconConfig _config;
 
     private readonly System.Drawing.Icon _iconOn;
@@ -15,9 +18,15 @@ internal class StatusIcon
 
     private readonly Forms.NotifyIcon notifyIcon;
 
-    // A method used to check the key lock status
+    /// <summary>
+    /// Method used to check the key lock status
+    /// </summary>
     private readonly Func<bool> _lockCheck;
 
+    /// <summary>
+    /// Status of requried icon visibility.
+    /// False means that the icon should not be displayed in the tray.
+    /// </summary>
     private bool _show;
 
     public StatusIcon(string name, StatusIconConfig config, Func<bool> lockCheckMethod)
@@ -60,19 +69,27 @@ internal class StatusIcon
     public void SwitchVisibilityStatus()
     {
         _show = !_show;
+        ResetVisibility();
     }
 
     /// <summary>
-    /// Set visibility of the actual graphical icon in the system tray
+    /// Switches off the visibility of icon, regardless of it's set status
     /// </summary>
-    /// <param name="visible">Visibility status</param>
-    public void SetIconVisibility(bool visible)
+    public void SwitchOffVisibility()
     {
-        notifyIcon.Visible = visible;
+        notifyIcon.Visible = false;
     }
 
     /// <summary>
-    /// Siapose of the tray icon
+    /// Reset the visibility of tray icon. Is icon is set to be visible, the icon becomes visible in the tray
+    /// </summary>
+    public void ResetVisibility()
+    {
+        notifyIcon.Visible = _show;
+    }
+
+    /// <summary>
+    /// Dispose of the tray icon
     /// </summary>
     public void Dispose()
     {
@@ -126,21 +143,6 @@ internal class StatusIcon
     }
 
     /// <summary>
-    /// Returns a menu item of the tray icon's context menu
-    /// </summary>
-    /// <param name="index">Menu item index</param>
-    /// <returns>Context menu's item</returns>
-    private Forms.ToolStripItem? GetContextMenuItem(int index)
-    {
-        var cMenuStrip = notifyIcon.ContextMenuStrip;
-        if (cMenuStrip is null)
-        {
-            return null;
-        }
-        return cMenuStrip.Items[index];
-    }
-
-    /// <summary>
     /// Update the icon's own configuration object
     /// </summary>
     public void UpdateConfiguration()
@@ -154,5 +156,20 @@ internal class StatusIcon
     public void CheckLockStatus()
     {
         notifyIcon.Icon = _lockCheck() ? _iconOn : _iconOff;
+    }
+
+    /// <summary>
+    /// Returns a menu item of the tray icon's context menu
+    /// </summary>
+    /// <param name="index">Menu item index</param>
+    /// <returns>Context menu's item</returns>
+    private Forms.ToolStripItem? GetContextMenuItem(int index)
+    {
+        var cMenuStrip = notifyIcon.ContextMenuStrip;
+        if (cMenuStrip is null)
+        {
+            return null;
+        }
+        return cMenuStrip.Items[index];
     }
 }

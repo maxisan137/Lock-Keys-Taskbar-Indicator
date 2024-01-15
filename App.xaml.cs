@@ -1,6 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Text.Json;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
@@ -22,12 +20,11 @@ public partial class App : Application
 
     private const int REFERSH_TIME_MS = 100;
 
+    private static Mutex? mutex = null;
+
     private StatusIconTray _iconTray;
 
-    private readonly DispatcherTimer timer = new();
 
-    private static Mutex? mutex = null;
-    
     protected override void OnStartup(StartupEventArgs e)
     {
         // Ensure that only one instance of the app is running
@@ -53,8 +50,7 @@ public partial class App : Application
         //}
 
         // Get configuration
-        ConfigHandler configHandler = new();
-        TrayConfig config = configHandler.GetConfig();
+        TrayConfig config = ConfigHandler.GetConfig();
 
         // Create icon tray
         _iconTray = new(config, this);
@@ -82,6 +78,7 @@ public partial class App : Application
         _iconTray.UpdateIcons();
 
         // Setup timer
+        DispatcherTimer timer = new();
         timer.Interval = TimeSpan.FromMilliseconds(REFERSH_TIME_MS);
         timer.Tick += (sender, e) => { _iconTray.UpdateIcons(); };
         timer.Start();
