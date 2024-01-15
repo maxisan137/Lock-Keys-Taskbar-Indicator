@@ -21,6 +21,10 @@
     <Optimize>True</Optimize>
   </PropertyGroup>
 
+	<PropertyGroup>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	</PropertyGroup>
+
   <ItemGroup>
     <COMReference Include="IWshRuntimeLibrary">
       <WrapperTool>tlbimp</WrapperTool>
