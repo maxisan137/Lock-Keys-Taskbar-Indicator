@@ -1,175 +1,158 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using Forms = System.Windows.Forms;
 
 
-namespace Maxisan.LockKeysTaskbarIndicator
+namespace Maxisan.LockKeysTaskbarIndicator;
+
+internal class StatusIcon
 {
-    internal class StatusIcon
+    private readonly string _name;
+
+    private readonly StatusIconConfig _config;
+
+    private readonly System.Drawing.Icon _iconOn;
+    private readonly System.Drawing.Icon _iconOff;
+
+    private readonly Forms.NotifyIcon notifyIcon;
+
+    // A method used to check the key lock status
+    private readonly Func<bool> _lockCheck;
+
+    private bool _show;
+
+    public StatusIcon(string name, StatusIconConfig config, Func<bool> lockCheckMethod)
     {
-        private const string MENU_TEXT_SPACE = " ";
-        private const string MENU_TEXT_SHOW = "Show";
-        private const string MENU_TEXT_HIDE = "Hide";
-        private const string MENU_TEXT_STATUS = "status";
-        private const string MENU_TEXT_EXIT = "Exit";
+        _name = name;
 
-        private readonly string name;
+        _config = config;
 
-        private readonly string iconPathOn;
-        private readonly string iconPathOff;
-        private readonly System.Drawing.Icon iconOn;
-        private readonly System.Drawing.Icon iconOff;
+        _iconOn = new(_config.IconPathOn);
+        _iconOff = new(_config.IconPathOff);
+        _show = _config.ShowIcon;
 
-        private bool show;
+        _lockCheck = lockCheckMethod;
 
-        private readonly Forms.NotifyIcon notifyIcon;
+        notifyIcon = new() { ContextMenuStrip = new Forms.ContextMenuStrip() };
+    }
 
-        // A method used to check the key lock status
-        public delegate bool LockCheck();
-        private readonly LockCheck lockCheck;
+    /// <summary>
+    /// Get the name of this status icon
+    /// </summary>
+    /// <returns>Status icon name</returns>
+    public string GetName()
+    {
+        return _name;
+    }
 
-        private static readonly List<StatusIcon> statusIcons = new();
+    /// <summary>
+    /// Returns the status of this icon being shown in the tray
+    /// </summary>
+    /// <returns>Status of this icon being shown in the tray</returns>
+    public bool IsShown()
+    {
+        return _show;
+    }
 
-        public StatusIcon(string name, StatusIconConfig config, LockCheck lockCheckMethod, App parent)
+    /// <summary>
+    /// Switch the status of this icon being shown in the tray.
+    /// Note: this does not make the icon invisible, but simply changes the internal parameter of whether or not it should be invisible
+    /// </summary>
+    public void SwitchVisibilityStatus()
+    {
+        _show = !_show;
+    }
+
+    /// <summary>
+    /// Set visibility of the actual graphical icon in the system tray
+    /// </summary>
+    /// <param name="visible">Visibility status</param>
+    public void SetIconVisibility(bool visible)
+    {
+        notifyIcon.Visible = visible;
+    }
+
+    /// <summary>
+    /// Siapose of the tray icon
+    /// </summary>
+    public void Dispose()
+    {
+        notifyIcon.Dispose();
+    }
+
+    /// <summary>
+    /// Add a menu item to the icon's context menu
+    /// </summary>
+    /// <param name="text">Menu item text</param>
+    /// <param name="onClick">Menu item on-click event handler</param>
+    public void AddContextMenuItem(string text, EventHandler onClick)
+    {
+        notifyIcon.ContextMenuStrip?.Items.Add(text, null, onClick);
+    }
+
+    /// <summary>
+    /// Clear all items from the icon's context menu
+    /// </summary>
+    public void ClearContextMenuItems()
+    {
+        notifyIcon.ContextMenuStrip?.Items.Clear();
+    }
+
+    /// <summary>
+    /// Set the text of an item in the icon's context menu
+    /// </summary>
+    /// <param name="index">Menu item index</param>
+    /// <param name="text">New menu item text</param>
+    public void SetContextMenuItemText(int index, string text)
+    {
+        var menuItem = GetContextMenuItem(index);
+        if (menuItem != null)
         {
-            this.name = name;
-            iconPathOn = config.IconPathOn;
-            iconOn = new(iconPathOn);
-            iconPathOff = config.IconPathOff;
-            iconOff = new(iconPathOff);
-            show = config.ShowIcon;
-            lockCheck = lockCheckMethod;
-
-            notifyIcon = new() { ContextMenuStrip = new Forms.ContextMenuStrip() };
-
-            // Clear menus of all icons
-            foreach (StatusIcon statusIcon in statusIcons)
-            {
-                statusIcon.notifyIcon.ContextMenuStrip?.Items.Clear();
-            }
-
-            // Add icon to static list
-            statusIcons.Add(this);
-
-            // Re-populate all icons with menu items
-            foreach (StatusIcon statusIconI in statusIcons)
-            {
-                // Add menu items for showing/hiding all icons
-                foreach (StatusIcon statusIconJ in statusIcons)
-                {
-                    statusIconI.notifyIcon.ContextMenuStrip?.Items.Add(
-                        statusIconJ.MenuItemText(),
-                        null,
-                        (sender, e) =>
-                        {
-                            statusIconJ.SwitchVisibility();
-                            parent.WriteConfig();
-                        }
-                        );
-                }
-
-                // Add menu item for exiting the application
-                statusIconI.notifyIcon.ContextMenuStrip?.Items.Add(
-                    MENU_TEXT_EXIT,
-                    null,
-                    (sender, e) =>
-                    {
-                        parent.Shutdown();
-                    }
-                    );
-            }
-
-            // Visualize the icon
-            if ( show ) { notifyIcon.Visible = true; }
-
-            // Makes sure to disable Hide option in case there is only one icon showed
-            UpdateMenuItems();
+            menuItem.Text = text;
         }
+    }
 
-        // Returns configuration of the status icon
-        public StatusIconConfig GetConfiguration()
+    /// <summary>
+    /// Set the availability of an item in the iocn's context menu
+    /// </summary>
+    /// <param name="index">Menu item index</param>
+    /// <param name="enabled">Whether or not the menu item should be enabled</param>
+    public void SetContextMenuItemAvailability(int index, bool enabled)
+    {
+        var menuItem = GetContextMenuItem(index);
+        if (menuItem != null)
         {
-            return new StatusIconConfig()
-            {
-                IconPathOn = iconPathOn,
-                IconPathOff = iconPathOff,
-                ShowIcon = show
-            };
+            menuItem.Enabled = enabled;
         }
+    }
 
-        // Checks the key lock status and changes icon accordingly
-        public void CheckLockStatus()
+    /// <summary>
+    /// Returns a menu item of the tray icon's context menu
+    /// </summary>
+    /// <param name="index">Menu item index</param>
+    /// <returns>Context menu's item</returns>
+    private Forms.ToolStripItem? GetContextMenuItem(int index)
+    {
+        var cMenuStrip = notifyIcon.ContextMenuStrip;
+        if (cMenuStrip is null)
         {
-            notifyIcon.Icon = lockCheck() ? iconOn : iconOff;
+            return null;
         }
+        return cMenuStrip.Items[index];
+    }
 
-        // Show or Hide status icon
-        public void SwitchVisibility()
-        {
-            show = !show;
-            foreach(StatusIcon statusIcon in statusIcons)
-            {
-                statusIcon.notifyIcon.Visible = false;
-            }
-            foreach(StatusIcon statusIcon in statusIcons)
-            {
-                statusIcon.notifyIcon.Visible = statusIcon.show;
-            }
-            UpdateMenuItems();
-        }
+    /// <summary>
+    /// Update the icon's own configuration object
+    /// </summary>
+    public void UpdateConfiguration()
+    {
+        _config.ShowIcon = _show;
+    }
 
-        // Returns the text of menu item related to this status icon in particular
-        private string MenuItemText()
-        {
-            return (show ? MENU_TEXT_HIDE : MENU_TEXT_SHOW) + MENU_TEXT_SPACE + name + MENU_TEXT_SPACE + MENU_TEXT_STATUS;
-        }
-
-        // Update the text of menu items based on whether or not the respective icons are showing
-        private static void UpdateMenuItems()
-        {
-            // Check if thre is only one icon visible, in which case disable ability to hide it
-            int disabled = -1;
-            for (int i = 0; i < statusIcons.Count; i++)
-            {
-                if (statusIcons[i].show)
-                {
-                    if (disabled == -1)
-                    {
-                        disabled = i;
-                    }
-                    else
-                    {
-                        disabled = -1;
-                        break;
-                    }
-                }
-            }
-
-            // Change menu items
-            foreach (StatusIcon statusIcon in statusIcons)
-            {
-                var cMenuStrip = statusIcon.notifyIcon.ContextMenuStrip;
-                if (cMenuStrip is null) continue;
-
-                for (int i = 0; i < statusIcons.Count; i++)
-                {
-                    cMenuStrip.Items[i].Text = statusIcons[i].MenuItemText();
-                    cMenuStrip.Items[i].Enabled = true;
-                }
-
-                if (disabled != -1)
-                {
-                    cMenuStrip.Items[disabled].Enabled = false;
-                }
-            }
-        }
-
-        // Disposes of all tray icons
-        public static void DisposeAllIcons()
-        {
-            foreach(StatusIcon statusIcon in statusIcons)
-            {
-                statusIcon.notifyIcon.Dispose();
-            }
-        }
+    /// <summary>
+    /// Checks the key lock status and changes icon accordingly
+    /// </summary>
+    public void CheckLockStatus()
+    {
+        notifyIcon.Icon = _lockCheck() ? _iconOn : _iconOff;
     }
 }
