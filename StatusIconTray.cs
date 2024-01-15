@@ -62,6 +62,9 @@ internal class StatusIconTray
                     );
             }
 
+            // Add menu separator
+            statusIconI.AddContextMenuSeparator();
+
             // Add menu item for switching the theme
             statusIconI.AddContextMenuItem(
                 MenuItemThemeSwitchText(_themeHandler),
@@ -166,7 +169,7 @@ internal class StatusIconTray
         }
 
         // Change menu items for each icon
-        int themeSwitchMenuItemIndex = _icons.Count;
+        int themeSwitchMenuItemIndex = _icons.Count + 1;
         foreach (StatusIcon statusIcon in _icons)
         {
             for (int i = 0; i < _icons.Count; i++)

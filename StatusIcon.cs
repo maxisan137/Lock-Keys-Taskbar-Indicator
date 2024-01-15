@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 using Forms = System.Windows.Forms;
 
 
@@ -103,6 +104,14 @@ internal class StatusIcon
     public void AddContextMenuItem(string text, EventHandler onClick)
     {
         notifyIcon.ContextMenuStrip?.Items.Add(text, null, onClick);
+    }
+
+    /// <summary>
+    /// Add a separator item to the icon's context menu
+    /// </summary>
+    public void AddContextMenuSeparator()
+    {
+        notifyIcon.ContextMenuStrip?.Items.Add(new ToolStripSeparator());
     }
 
     /// <summary>
