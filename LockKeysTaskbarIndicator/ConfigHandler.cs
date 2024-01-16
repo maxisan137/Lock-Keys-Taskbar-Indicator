@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.IO;
 
 
@@ -6,7 +7,8 @@ namespace Maxisan.LockKeysTaskbarIndicator;
 
 internal static class ConfigHandler
 {
-    private const string CONFIG_FILE_PATH = "config.json";
+    private const string CONFIG_FILE_LOCAL_LOCATION = "MaxisanDev/LockKeysTaskbarIndicator";
+    private const string CONFIG_FILE_NAME = "config.json";
 
     private const string DEFAULT_ICON_PATH_CAPS_ON_LIGHT = "icons/capslock_on_black.ico";
     private const string DEFAULT_ICON_PATH_CAPS_ON_DARK = "icons/capslock_on_white.ico";
@@ -33,11 +35,12 @@ internal static class ConfigHandler
     /// <returns>Icons configuration</returns>
     public static AppConfig GetConfig()
     {
-        if (File.Exists(CONFIG_FILE_PATH))
+        string configFilePath = GetConfigFilePath();
+        if (File.Exists(configFilePath))
         {
             try
             {
-                AppConfig? savedConfig = JsonConvert.DeserializeObject<AppConfig>(File.ReadAllText(CONFIG_FILE_PATH));
+                AppConfig? savedConfig = JsonConvert.DeserializeObject<AppConfig>(File.ReadAllText(configFilePath));
                 if (savedConfig is not null)
                 {
                     return savedConfig;
@@ -59,15 +62,35 @@ internal static class ConfigHandler
     {
         string configJsonString = JsonConvert.SerializeObject(config, Formatting.Indented);
 
-
-        if (File.Exists(CONFIG_FILE_PATH))
+        string configFilePath = GetConfigFilePath();
+        string? directoryPath = Path.GetDirectoryName(configFilePath);
+        if (directoryPath != null)
         {
-            File.Delete(CONFIG_FILE_PATH);
+            Directory.CreateDirectory(directoryPath);
+        }
+
+        if (File.Exists(configFilePath))
+        {
+            File.Delete(configFilePath);
         }
         
-        File.WriteAllText(CONFIG_FILE_PATH, configJsonString);
+        File.WriteAllText(configFilePath, configJsonString);
     }
 
+    /// <summary>
+    /// Get the path to the config file
+    /// </summary>
+    /// <returns>Path to the config file</returns>
+    private static string GetConfigFilePath()
+    {
+        string localFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        return Path.Combine(localFolder, CONFIG_FILE_LOCAL_LOCATION, CONFIG_FILE_NAME);
+    }
+
+    /// <summary>
+    /// Generate a default app config object
+    /// </summary>
+    /// <returns>Default AppConfig</returns>
     private static AppConfig GetDefaultConfig()
     {
         return new AppConfig()
