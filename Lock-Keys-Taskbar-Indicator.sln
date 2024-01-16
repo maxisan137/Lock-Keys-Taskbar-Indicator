@@ -3,18 +3,54 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LockKeysTaskbarIndicator", "LockKeysTaskbarIndicator/LockKeysTaskbarIndicator.csproj", "{489A2206-DD0B-4838-AB18-C190C2E658E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LockKeysTaskbarIndicator", "LockKeysTaskbarIndicator\LockKeysTaskbarIndicator.csproj", "{489A2206-DD0B-4838-AB18-C190C2E658E7}"
+EndProject
+Project("{B7DD6F7E-DEF8-4E67-B5B7-07EF123DB6F0}") = "LockKeysTaskbarIndicator.Installer", "LockKeysTaskbarIndicator.Installer\LockKeysTaskbarIndicator.Installer.wixproj", "{C80FC64A-46BC-421C-89BC-2026537FF392}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|ARM64 = Debug|ARM64
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|ARM64 = Release|ARM64
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{489A2206-DD0B-4838-AB18-C190C2E658E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{489A2206-DD0B-4838-AB18-C190C2E658E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{489A2206-DD0B-4838-AB18-C190C2E658E7}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{489A2206-DD0B-4838-AB18-C190C2E658E7}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{489A2206-DD0B-4838-AB18-C190C2E658E7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{489A2206-DD0B-4838-AB18-C190C2E658E7}.Debug|x64.Build.0 = Debug|Any CPU
+		{489A2206-DD0B-4838-AB18-C190C2E658E7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{489A2206-DD0B-4838-AB18-C190C2E658E7}.Debug|x86.Build.0 = Debug|Any CPU
 		{489A2206-DD0B-4838-AB18-C190C2E658E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{489A2206-DD0B-4838-AB18-C190C2E658E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{489A2206-DD0B-4838-AB18-C190C2E658E7}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{489A2206-DD0B-4838-AB18-C190C2E658E7}.Release|ARM64.Build.0 = Release|Any CPU
+		{489A2206-DD0B-4838-AB18-C190C2E658E7}.Release|x64.ActiveCfg = Release|Any CPU
+		{489A2206-DD0B-4838-AB18-C190C2E658E7}.Release|x64.Build.0 = Release|Any CPU
+		{489A2206-DD0B-4838-AB18-C190C2E658E7}.Release|x86.ActiveCfg = Release|Any CPU
+		{489A2206-DD0B-4838-AB18-C190C2E658E7}.Release|x86.Build.0 = Release|Any CPU
+		{C80FC64A-46BC-421C-89BC-2026537FF392}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{C80FC64A-46BC-421C-89BC-2026537FF392}.Debug|Any CPU.Build.0 = Debug|x64
+		{C80FC64A-46BC-421C-89BC-2026537FF392}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{C80FC64A-46BC-421C-89BC-2026537FF392}.Debug|ARM64.Build.0 = Debug|ARM64
+		{C80FC64A-46BC-421C-89BC-2026537FF392}.Debug|x64.ActiveCfg = Debug|x64
+		{C80FC64A-46BC-421C-89BC-2026537FF392}.Debug|x64.Build.0 = Debug|x64
+		{C80FC64A-46BC-421C-89BC-2026537FF392}.Debug|x86.ActiveCfg = Debug|x86
+		{C80FC64A-46BC-421C-89BC-2026537FF392}.Debug|x86.Build.0 = Debug|x86
+		{C80FC64A-46BC-421C-89BC-2026537FF392}.Release|Any CPU.ActiveCfg = Release|x64
+		{C80FC64A-46BC-421C-89BC-2026537FF392}.Release|Any CPU.Build.0 = Release|x64
+		{C80FC64A-46BC-421C-89BC-2026537FF392}.Release|ARM64.ActiveCfg = Release|ARM64
+		{C80FC64A-46BC-421C-89BC-2026537FF392}.Release|ARM64.Build.0 = Release|ARM64
+		{C80FC64A-46BC-421C-89BC-2026537FF392}.Release|x64.ActiveCfg = Release|x64
+		{C80FC64A-46BC-421C-89BC-2026537FF392}.Release|x64.Build.0 = Release|x64
+		{C80FC64A-46BC-421C-89BC-2026537FF392}.Release|x86.ActiveCfg = Release|x86
+		{C80FC64A-46BC-421C-89BC-2026537FF392}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

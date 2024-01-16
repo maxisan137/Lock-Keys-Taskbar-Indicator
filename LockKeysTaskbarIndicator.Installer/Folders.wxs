@@ -1,0 +1,13 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Fragment>
+	  
+    <StandardDirectory Id="ProgramFiles6432Folder">
+      <Directory Id="INSTALLFOLDER" Name="!(bind.Property.Manufacturer)/!(bind.Property.ProductName)" />
+    </StandardDirectory>
+	  
+	  <Directory Id="DesktopFolder" Name="Desktop/" />
+
+	  <Directory Id="StartupFolder" />
+	  
+  </Fragment>
+</Wix>
