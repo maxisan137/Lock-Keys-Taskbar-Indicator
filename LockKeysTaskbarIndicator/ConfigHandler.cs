@@ -7,7 +7,7 @@ namespace Maxisan.LockKeysTaskbarIndicator;
 
 internal static class ConfigHandler
 {
-    private const string CONFIG_FILE_LOCAL_LOCATION = "MaxisanDev/LockKeysTaskbarIndicator";
+    private const string CONFIG_FILE_LOCAL_LOCATION = "Maxisan/LockKeysTaskbarIndicator";
     private const string CONFIG_FILE_NAME = "config.json";
 
     private const string DEFAULT_ICON_PATH_CAPS_ON_LIGHT = "icons/capslock_on_black.ico";
