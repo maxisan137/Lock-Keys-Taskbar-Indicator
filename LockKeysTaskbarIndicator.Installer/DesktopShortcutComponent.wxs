@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Fragment>
+	  
+	  <Component Id="DesktopShortcutComponent" Directory="DesktopFolder" Guid="c42a653b-181a-4313-addc-4526821b8776">
+		  <Shortcut Id="AppDesktopShortcut"
+				  Name="!(bind.Property.ProductName)"
+				  Description="!(bind.Property.ProductName)"
+				  Target="[INSTALLFOLDER]LockKeysTaskBarIndicator.exe"
+				  WorkingDirectory="INSTALLFOLDER" />
+		  <RegistryValue Root="HKCU"
+						  Key="Software\MaxisanDev\KeyLockTaskbarIndicator"
+						  Name="DesktopShortcut"
+						  Type="string"
+						  Value="1"
+						  KeyPath="yes" />
+	  </Component>
+	  
+  </Fragment>
+</Wix>

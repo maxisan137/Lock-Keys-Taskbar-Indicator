@@ -1,5 +1,15 @@
 ﻿<Project Sdk="WixToolset.Sdk/4.0.3">
   <ItemGroup>
+    <Content Include="WixUIBannerBmp.png" />
+    <Content Include="WixUIDialogBmp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="License.rtf" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="WixToolset.UI.wixext" Version="4.0.3" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\LockKeysTaskbarIndicator\LockKeysTaskbarIndicator.csproj" />
   </ItemGroup>
 </Project>

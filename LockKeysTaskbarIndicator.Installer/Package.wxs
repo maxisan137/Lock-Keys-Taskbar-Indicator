@@ -1,79 +1,40 @@
-﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs" xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
   <Package Compressed="yes"
+		   Language="1033"
 		   Name="Lock Keys Taskbar Indicator"
-		   Manufacturer="MaxisanDev"
+		   Manufacturer="Maxisan"
 		   Version="1.1.0"
-		   UpgradeCode="4edce4de-ead6-4bc4-a4a7-0c196fbeb237">
+		   UpgradeCode="4edce4de-ead6-4bc4-a4a7-0c196fbeb237"
+		   InstallerVersion="200">
 
-	  <MediaTemplate EmbedCab="yes"/>
+		<MediaTemplate EmbedCab="yes"/>
 	  
-    <MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeError)" />
+		<MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeError)" />
 
-	  <Feature Id="ProductFeature" Title="Lock Keys Taskbar Indicator" Level="1">
-		  <ComponentGroupRef Id="AppComponents" />
-		  <ComponentRef Id="DesktopShortcutComponent" />
-		  <ComponentRef Id="StartupShortcutComponent" />
+	  <!--App Install-->
+	  <Feature Id="AppFeature" Title="Lock Keys Taskbar Indicator">
+		  <ComponentGroupRef Id="AppComponents"/>
 	  </Feature>
 
-	  <ComponentGroup Id="AppComponents">
-		  <ComponentRef Id="AppBinariesComponent"/>
-		  <ComponentRef Id="AppIconsComponent"/>
-	  </ComponentGroup>
+	  <!--Add Desktop Shortcut-->
+	  <Feature Id="DesktopShortcut" Title="Desktop Shortcut">
+		  <ComponentRef Id="DesktopShortcutComponent"/>
+	  </Feature>
 
-		<!--App Files-->
-		<Component Id="AppBinariesComponent" Directory="INSTALLFOLDER" Guid="614e0506-6936-4c81-805d-86c614a728cf">
-			<File Id="MainExecutable" Source="LockKeysTaskBarIndicator.exe" />
-			<File Source="LockKeysTaskBarIndicator.dll" />
-			<File Source="LockKeysTaskBarIndicator.deps.json" />
-			<File Source="LockKeysTaskBarIndicator.pdb" />
-			<File Source="LockKeysTaskBarIndicator.runtimeconfig.json" />
-			<File Source="Newtonsoft.Json.dll" />
-		</Component>
+	  <!--Add Shortcut to Startup-->
+	  <Feature Id="Startup" Title="Startup">
+		  <ComponentRef Id="StartupShortcutComponent"/>
+	  </Feature>
 
-		<Component Id="AppIconsComponent" Directory="IconsFolder" Guid="25c825e7-940d-412c-b29f-2140c2f933e3">
-			<File Source="icons/capslock_off_black.ico" />
-			<File Source="icons/capslock_off_white.ico" />
-			<File Source="icons/capslock_on_black.ico" />
-			<File Source="icons/capslock_on_white.ico" />
-			<File Source="icons/numlock_off_black.ico" />
-			<File Source="icons/numlock_off_white.ico" />
-			<File Source="icons/numlock_on_black.ico" />
-			<File Source="icons/numlock_on_white.ico" />
-			<File Source="icons/scrolllock_off_black.ico" />
-			<File Source="icons/scrolllock_off_white.ico" />
-			<File Source="icons/scrolllock_on_black.ico" />
-			<File Source="icons/scrolllock_on_white.ico" />
-		</Component>
+	  <!--UI-->
+	  <ui:WixUI Id="WixUI_InstallDir" InstallDirectory="INSTALLFOLDER" />
+	  <WixVariable Id="WixUIDialogBmp" Value="WixUIDialogBmp.png" />
+	  <WixVariable Id="WixUIBannerBmp" Value="WixUIBannerBmp.png" />
 
-		<!--Desktop Shortcut-->
-		<Component Id="DesktopShortcutComponent" Directory="DesktopFolder" Guid="c42a653b-181a-4313-addc-4526821b8776">
-			<Shortcut Id="AppDesktopShortcut"
-					Name="!(bind.Property.ProductName)"
-					Description="!(bind.Property.ProductName)"
-					Target="[INSTALLFOLDER]LockKeysTaskBarIndicator.exe"
-					WorkingDirectory="INSTALLFOLDER" />
-			<RegistryValue Root="HKCU"
-							Key="Software\MaxisanDev\KeyLockTaskbarIndicator"
-							Name="DesktopShortcut"
-							Type="string"
-							Value="1"
-							KeyPath="yes" />
-		</Component>
+	  <WixVariable Id="WixUILicenseRtf" Value="License.rtf" />
 
-		<!--Startup-->
-		<Component Id="StartupShortcutComponent" Directory="StartupFolder" Guid="*">
-			<Shortcut Id="ApplicationStartupShortcut"
-					Name="!(bind.Property.ProductName)"
-					Description="!(bind.Property.ProductName)"
-					Target="[INSTALLFOLDER]LockKeysTaskBarIndicator.exe"
-					WorkingDirectory="INSTALLFOLDER"/>
-			<RegistryValue Root="HKCU"
-						   Key="Software\MaxisanDev\KeyLockTaskbarIndicator"
-						   Name="StartupShortcut"
-						   Type="integer"
-						   Value="1"
-						   KeyPath="yes"/>
-		</Component>
+	  <Property Id="WIXUI_EXITDIALOGOPTIONALTEXT" Value="!(loc.InstallEndText)" />
 	  
   </Package>
+	
 </Wix>
