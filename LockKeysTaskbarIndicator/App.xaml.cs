@@ -10,9 +10,6 @@ namespace Maxisan.LockKeysTaskbarIndicator;
 public partial class App : Application
 {
     private const string APP_NAME = "LockKeysTaskBarIndicator";
-    private const string APP_SHORTCUT_NAME = "Lock Keys Taskbar Indicator";
-    private const string FILE_EXT_EXE = ".exe";
-    private const string FILE_EXT_LNK = ".lnk";
 
     private const string STATUS_ICON_NAME_CAPS = "Caps Lock";
     private const string STATUS_ICON_NAME_NUM = "Num Lock";
@@ -35,19 +32,6 @@ public partial class App : Application
             MessageBox.Show("An instance of the application is already running!");
             Current.Shutdown();
         }
-
-        //// Add app shortcut to startup, if not already done so
-        //string startupFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
-        //string shortcutPath = Path.Combine(startupFolderPath, APP_SHORTCUT_NAME + FILE_EXT_LNK);
-        //if (!File.Exists(shortcutPath))
-        //{
-        //    IWshRuntimeLibrary.WshShell wsh = new IWshRuntimeLibrary.WshShell();
-        //    IWshRuntimeLibrary.IWshShortcut shortcut = (IWshRuntimeLibrary.IWshShortcut)wsh.CreateShortcut(shortcutPath);
-        //    string exeDir = AppContext.BaseDirectory;
-        //    shortcut.WorkingDirectory = exeDir;
-        //    shortcut.TargetPath = Path.Combine(exeDir, APP_NAME + FILE_EXT_EXE);
-        //    shortcut.Save();
-        //}
 
         // Get configuration
         AppConfig config = ConfigHandler.GetConfig();
