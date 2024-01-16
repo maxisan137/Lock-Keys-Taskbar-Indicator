@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Fragment>
+	  
+	  <ComponentGroup Id="AppComponents">
+		  <ComponentRef Id="AppBinariesComponent"/>
+		  <ComponentRef Id="AppIconsComponent"/>
+	  </ComponentGroup>
+
+	  <Component Id="AppBinariesComponent" Directory="INSTALLFOLDER" Guid="614e0506-6936-4c81-805d-86c614a728cf">
+		  <File Id="MainExecutable" Source="LockKeysTaskBarIndicator.exe" />
+		  <File Source="LockKeysTaskBarIndicator.dll" />
+		  <File Source="LockKeysTaskBarIndicator.deps.json" />
+		  <File Source="LockKeysTaskBarIndicator.pdb" />
+		  <File Source="LockKeysTaskBarIndicator.runtimeconfig.json" />
+		  <File Source="Newtonsoft.Json.dll" />
+	  </Component>
+
+	  <Component Id="AppIconsComponent" Directory="IconsFolder" Guid="25c825e7-940d-412c-b29f-2140c2f933e3">
+		  <File Source="icons/capslock_off_black.ico" />
+		  <File Source="icons/capslock_off_white.ico" />
+		  <File Source="icons/capslock_on_black.ico" />
+		  <File Source="icons/capslock_on_white.ico" />
+		  <File Source="icons/numlock_off_black.ico" />
+		  <File Source="icons/numlock_off_white.ico" />
+		  <File Source="icons/numlock_on_black.ico" />
+		  <File Source="icons/numlock_on_white.ico" />
+		  <File Source="icons/scrolllock_off_black.ico" />
+		  <File Source="icons/scrolllock_off_white.ico" />
+		  <File Source="icons/scrolllock_on_black.ico" />
+		  <File Source="icons/scrolllock_on_white.ico" />
+	  </Component>
+	  
+  </Fragment>
+</Wix>

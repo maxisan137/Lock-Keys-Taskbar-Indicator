@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Fragment>
+	  
+	  <Component Id="StartupShortcutComponent" Directory="StartupFolder" Guid="*">
+		  <Shortcut Id="ApplicationStartupShortcut"
+				  Name="!(bind.Property.ProductName)"
+				  Description="!(bind.Property.ProductName)"
+				  Target="[INSTALLFOLDER]LockKeysTaskBarIndicator.exe"
+				  WorkingDirectory="INSTALLFOLDER"/>
+		  <RegistryValue Root="HKCU"
+						 Key="Software\MaxisanDev\KeyLockTaskbarIndicator"
+						 Name="StartupShortcut"
+						 Type="integer"
+						 Value="1"
+						 KeyPath="yes"/>
+	  </Component>
+	  
+  </Fragment>
+</Wix>

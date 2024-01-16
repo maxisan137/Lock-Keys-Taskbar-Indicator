@@ -1,0 +1,40 @@
+﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs" xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
+  <Package Compressed="yes"
+		   Language="1033"
+		   Name="Lock Keys Taskbar Indicator"
+		   Manufacturer="Maxisan"
+		   Version="1.1.0"
+		   UpgradeCode="4edce4de-ead6-4bc4-a4a7-0c196fbeb237"
+		   InstallerVersion="200">
+
+		<MediaTemplate EmbedCab="yes"/>
+	  
+		<MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeError)" />
+
+	  <!--App Install-->
+	  <Feature Id="AppFeature" Title="Lock Keys Taskbar Indicator">
+		  <ComponentGroupRef Id="AppComponents"/>
+	  </Feature>
+
+	  <!--Add Desktop Shortcut-->
+	  <Feature Id="DesktopShortcut" Title="Desktop Shortcut">
+		  <ComponentRef Id="DesktopShortcutComponent"/>
+	  </Feature>
+
+	  <!--Add Shortcut to Startup-->
+	  <Feature Id="Startup" Title="Startup">
+		  <ComponentRef Id="StartupShortcutComponent"/>
+	  </Feature>
+
+	  <!--UI-->
+	  <ui:WixUI Id="WixUI_InstallDir" InstallDirectory="INSTALLFOLDER" />
+	  <WixVariable Id="WixUIDialogBmp" Value="WixUIDialogBmp.png" />
+	  <WixVariable Id="WixUIBannerBmp" Value="WixUIBannerBmp.png" />
+
+	  <WixVariable Id="WixUILicenseRtf" Value="License.rtf" />
+
+	  <Property Id="WIXUI_EXITDIALOGOPTIONALTEXT" Value="!(loc.InstallEndText)" />
+	  
+  </Package>
+	
+</Wix>
